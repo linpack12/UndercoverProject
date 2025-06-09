@@ -81,7 +81,16 @@ public class MemoryModule : MonoBehaviour
         if (suspicionScores[key] >= suspicionThreshold)
         {
             Debug.LogWarning($"[{name}] ALERT: Suspicion threshold passed for {observed.name} doing {action}!");
+            Vector3 playerPos = observed.transform.position;
+
             //Alert Guards
+            var alert = new SuspicionAlertEvent(
+                source: gameObject,
+                susNPC: gameObject,
+                actionType: action,
+                location: playerPos
+            );
+            GameEventBus<SuspicionAlertEvent>.Raise(alert);
         }
     }
 

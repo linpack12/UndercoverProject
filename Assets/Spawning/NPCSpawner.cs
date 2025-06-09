@@ -29,21 +29,6 @@ public class NPCSpawner : MonoBehaviour
         BuildRolePrefabMap();
         CacheRoleZones();
         SpawnAllNPCs();
-        //availableTraits = new List<TraitDefinition>(Resources.LoadAll<TraitDefinition>("Traits"));
-        //Debug.Log($"Loaded {availableTraits.Count} trait definitions from Resources/Traits");
-
-        //foreach (var rp in rolePrefabs)
-        //{
-        //    if (!rolePrefabMap.ContainsKey(rp.role))
-        //    {
-        //        rolePrefabMap[rp.role] = rp.prefab;
-        //    }
-        //}
-
-        //for (int i = 0; i < npcCount; i++)
-        //{
-        //    SpawnNPC();
-        //}
     }
 
     private void LoadTraitDefinitions()

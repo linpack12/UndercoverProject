@@ -1,7 +1,6 @@
-using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
+//Requirement needed you idiot
 public class PerceptionModule : MonoBehaviour
 {
     [SerializeField] private float viewRadius = 5f;

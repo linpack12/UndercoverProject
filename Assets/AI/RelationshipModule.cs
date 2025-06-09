@@ -15,6 +15,7 @@ public class RelationshipModule : MonoBehaviour
         {
             _relations[target] = defaultRelation;   
         }
+        // Clamp 01 
         _relations[target] = Mathf.Clamp(_relations[target] + delta, 0, 100); 
     }
 
