@@ -4,6 +4,8 @@ public class PlayerMover : MonoBehaviour
     public float speed = 5f;
     private SuspiciousActionComponent _suspicion;
 
+    [SerializeField] private ActionData testData;
+
     private void Awake()
     {
         _suspicion = GetComponent<SuspiciousActionComponent>();
@@ -16,7 +18,7 @@ public class PlayerMover : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _suspicion.MarkSuspicious("suspicious_action");
+            _suspicion.MarkSuspicious(testData);
             Debug.Log("Player triggered suspicious action");
         }
     }
