@@ -16,10 +16,10 @@ public class PlayerMover : MonoBehaviour
         var dir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         transform.Translate(dir.normalized * speed * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && testData != null)
         {
             _suspicion.MarkSuspicious(testData);
-            Debug.Log("Player triggered suspicious action");
+            Debug.Log($"Player triggered suspicious action: {testData.actionName}");
         }
     }
 }
