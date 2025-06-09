@@ -22,6 +22,7 @@ public class NPCSpawner : MonoBehaviour
 
     //Cache for zones per role 
     private Dictionary<string, List<Zone>> roleZoneCache = new();
+    private HashSet<Zone> usedGuardZones = new();
 
     private void Awake()
     {
@@ -49,7 +50,17 @@ public class NPCSpawner : MonoBehaviour
     {
         foreach (var rp in rolePrefabs)
         {
-            roleZoneCache[rp.role] = zones.Where(z => z.allowedRoles.Contains(rp.role)).ToList();
+            var prefabIsGuard = rp.prefab.GetComponent<GuardAI>() != null;
+            if (prefabIsGuard)
+            {
+                //Guards can only be assigned guard zones
+                roleZoneCache[rp.role] = zones.OfType<GuardZone>().Where(z => z != null && z.allowedRoles != null && z.allowedRoles.Contains(rp.role)).Cast<Zone>().ToList();
+            }
+            else
+            {
+                //Normal NPC get default zones
+                roleZoneCache[rp.role] = zones.Where(z => z != null && z.allowedRoles != null && !(z is GuardZone) && z.allowedRoles.Contains(rp.role)).ToList();
+            }
         }
     }
 
@@ -67,14 +78,38 @@ public class NPCSpawner : MonoBehaviour
         if (!rolePrefabMap.TryGetValue(role, out GameObject prefab)) { return; }
         if (!roleZoneCache.TryGetValue(role, out List<Zone> validZones) || validZones.Count == 0) { return; }
 
-        Zone chosenZone = validZones[Random.Range(0, validZones.Count)];
-        Vector3 spawnPos = GetUniquePosition(chosenZone);
+        bool isGuard = prefab.GetComponent<GuardAI>() != null;
+        if (isGuard)
+        {
+            Debug.Log($"Trying to spawn guard for role: {role}");
+            var availableGuardZones = validZones.Cast<GuardZone>().Where(z => z.CurrentGuard == null).ToList();
+            if (availableGuardZones.Count == 0)
+            {
+                return;
+            }
 
-        GameObject npc = Instantiate(rolePrefabMap[role], spawnPos, Quaternion.identity);
-        npc.name = $"{role}_{Random.Range(1000, 9999)}";
+            GuardZone zone = availableGuardZones[Random.Range(0, availableGuardZones.Count)];
+            Vector3 spawnPos = GetUniquePosition(zone);
 
-        AssignRandomTraits(npc);
-        Debug.Log($"Spawned {npc.name} in Zone {chosenZone.zoneId}");
+            GameObject npc = Instantiate(prefab, spawnPos, Quaternion.identity);
+            npc.name = $"{role}_{Random.Range(1000, 9999)}";
+            var zonable = npc.GetComponent<ZonableNPC>();
+            if (zonable != null)
+            {
+                zonable.CurrentZone = zone;
+            }
+            zone.CurrentGuard = npc;
+        }
+        else
+        {
+            Zone zone = validZones[Random.Range(0, validZones.Count)];
+            Vector3 spawnPos = GetUniquePosition(zone);
+
+            GameObject npc = Instantiate(prefab, spawnPos, Quaternion.identity);
+            npc.name = $"{role}_{Random.Range(1000, 9999)}";
+
+            AssignRandomTraits(npc);
+        }
     }
 
     private string GetRandomRole()

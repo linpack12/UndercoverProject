@@ -12,7 +12,7 @@ public class MemoryModule : MonoBehaviour
     [SerializeField] private float gossipThreshold = 0.5f; 
     [SerializeField] private float gossipRadius = 5f;
 
-    [SerializeField] private float suspicionThreshold = 1.0f;
+    [SerializeField] private float suspicionThreshold = 0.3f;
     [SerializeField] private float suspicionDecayRate = 0.02f;
 
     private readonly List<MemoryEntry> _memories = new();
@@ -91,6 +91,8 @@ public class MemoryModule : MonoBehaviour
                 location: playerPos
             );
             GameEventBus<SuspicionAlertEvent>.Raise(alert);
+            //Reset after alert
+            suspicionScores[key] = 0f;
         }
     }
 
