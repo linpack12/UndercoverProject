@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new hata carbonara", menuName = "Action Type")]
+[CreateAssetMenu(fileName = "new älska carbonara", menuName = "Action Type")]
 public class ActionData : ScriptableObject
 {
     public string actionName;
