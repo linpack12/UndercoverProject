@@ -39,7 +39,7 @@ public class MemoryModule : MonoBehaviour
     public void Remember(GameObject observed, string action)
     {
         int id = observed.GetInstanceID();
-        var key = (id, action);
+        _ = (id, action);
         RegisterSuspicion(observed, action);
 
         //Check if already observed 

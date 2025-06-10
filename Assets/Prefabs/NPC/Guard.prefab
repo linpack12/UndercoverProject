@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 381701985215774242}
   - component: {fileID: 1506092748626543061}
   - component: {fileID: 1965868392480950516}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.21133333}
@@ -226,7 +226,7 @@ MonoBehaviour:
   passiveDecayInterval: 2
   gossipThreshold: 0.5
   gossipRadius: 2
-  suspicionThreshold: 1
+  suspicionThreshold: 0.2
   suspicionDecayRate: 0.02
 --- !u!114 &1302055064725036950
 MonoBehaviour:

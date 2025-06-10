@@ -18,7 +18,8 @@ public class AlertListener : MonoBehaviour
 
     private void OnSuspicionAlert(SuspicionAlertEvent e)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(e.Location, alertRadius);
+        int layerMask = 1 << LayerMask.NameToLayer("Guard");
+        Collider2D[] hits = Physics2D.OverlapCircleAll(e.Location, alertRadius, layerMask);
 
         foreach (var hit in hits)
         {

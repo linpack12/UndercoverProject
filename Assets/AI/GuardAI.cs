@@ -112,6 +112,7 @@ public class GuardAI : MonoBehaviour
     {
         GameObject go = new GameObject("TempTarget");
         go.transform.position = pos;
+        Destroy(go, MaxSearchTime + 1f);
         return go.transform;
     }
 }
