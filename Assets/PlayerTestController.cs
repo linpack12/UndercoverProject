@@ -1,5 +1,5 @@
 using UnityEngine;
-public class PlayerMover : MonoBehaviour
+public class PlayerTestController : MonoBehaviour
 {
     public float speed = 5f;
     private SuspiciousActionComponent _suspicion;
